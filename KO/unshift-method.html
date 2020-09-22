@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>Example to demonstrate unshift() method.</p>
+    <p>Enter name: <input data-bind='value: empName' /></p>
+    <button data-bind="click: unshiftEmp">Add Emp in Beginning</button><br><br>
+    <p>Array of employees: <span data-bind="text: empArray()" ></span></p>
+
+
+
+    <script src="js/ko.min.js"></script>
+    <script src="js/knockout.mapping.js"></script>
+
+    <script>
+  
+    function EmployeeModel(){
+    this.empName = ko.observable("");
+    this.chosenItem = ko.observableArray("");
+    this.empArray = ko.observableArray(['Scott','James','Jordan','Lee','RoseMary','Kathie']);
+    this.unshiftEmp = function() {
+    if (this.empName() != "") {
+    this.empArray.unshift(this.empName()); // insert at the beginning
+    this.empName("");
+    }
+    }.bind(this);
+    }
+    var em = new EmployeeModel();
+    ko.applyBindings(em);
+
+
+        </script>
+</body>
+</html>

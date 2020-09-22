@@ -1,0 +1,94 @@
+ 
+#bgImage {
+	background-color: dimgrey; 
+	color: gainsboro;
+
+}
+
+#sub-head{
+	margin-top: 10px; 
+	color:rgb(145, 18, 18); 
+	font-weight: bold;
+}
+
+table {
+	color:wheat;
+}
+
+#aboki, #interbank, #calculator {
+	padding-top: 30px;
+}
+.currencyLogo {
+	height: 10px;
+}
+
+#brand {
+	color: rgb(105, 105, 226);
+}
+
+
+
+
+
+a {
+	transition: .5s
+}
+
+flex {
+	display: flex
+}
+
+
+
+@media only print {
+	.no-print {
+		display: none !important
+	}
+
+	.print-only {
+		display: block !important
+	}
+
+	tr.print-only {
+		display: table-row !important
+	}
+
+	.print-nopadding {
+		padding: 0 !important
+	}
+
+	.print-no-leftpadding {
+		padding-left: 0 !important
+	}
+
+	.print-noborder {
+		border: none !important
+	}
+
+	.print-fullwidth {
+		width: 100%
+	}
+
+	.print-receipt-body {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.receipt {
+		padding: 5px !important;
+		color: #05a !important;
+	}
+
+	.receipt * {
+		color: #05a !important
+	}
+
+	.print-vertically-mini-padded {
+		margin-top: 1rem;
+		margin-bottom: 1rem
+	}
+
+	.print-hidden {
+		display: none !important
+	}
+}
