@@ -1,0 +1,133 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KO</title>
+
+    <link rel="stylesheet" href="css/yeti.bootstrap.3.3.5.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div style="padding-left: 30px;">
+        <h1>Hello knockout.js</h1> 
+        <p><span data-bind='text: fullName'></span>'s shopping cart</p>
+       
+        <p data-bind='with: featuredProduct'> Do you need <strong data-bind='text: name'></strong>? <br />
+            Get one now for only <strong data-bind='text: price'></strong>. </p>
+        
+        <p><a data-bind='attr: {href: featuredProduct().permalink}'>View details</a></p>
+
+        <button class="btn btn-warning"  data-bind='click: checkout'>Checkout</button>
+        <button class="btn btn-success" data-bind='click: addProduct'>Add Beer</button>
+        
+        <p>
+            <table> 
+                <thead>
+                    <tr> 
+                        <th>Product</th>
+                        <th></th>
+                        <th>Price</th> 
+                    </tr>
+                </thead> 
+                <tbody data-bind='foreach: shoppingCart'> 
+                    <tr>
+                        <td data-bind='text: $index'></td>
+                        <td data-bind='text: name'></td> 
+                        <td></td>
+                        <td data-bind='text: price'></td>
+                        
+                        <td> <!-- Add a list of tags. --> 
+                            <ul data-bind='foreach: tags'>
+                                <!-- <span data-bind="text: $parent.name"></span>-- -->
+
+                                <li>
+                                    <span data-bind='text: $data'></span> 
+                                </li>
+                            </ul> 
+                        </td>
+                        <!-- <td data-bind='if: discount() > 0' style='color: red; font-weight: bold'> You saved  -->
+                            <!-- <span data-bind='text: formattedDiscount style: {fontWeight: discount() > .15 ? "bold" : "normal" '}></span>!!! </td> -->
+                        <td data-bind='visible: discount() > 0' style='color: red; display: none; font-weight:bold'> You saved <span data-bind='text: formattedDiscount '></span>!!! </td>
+                        
+                        <td><button data-bind='click: $root.removeProduct'>Remove</button></td>
+                    </tr> 
+                </tbody> 
+            </table>
+        </p>
+        
+    </div>
+
+
+    
+    <script src="js/jquery.1.11.3.min.js"></script>
+    <script src="js/bootstrap.3.3.5.min.js"></script>
+    <script src="js/ko.min.js"></script>
+    <script src="js/knockout.mapping.js"></script>
+
+
+
+    <script>
+        
+        function Product(name, price, tags, discount) { 
+            this.name = ko.observable(name); 
+            this.price = ko.observable(price); 
+            
+            tags = typeof(tags) !== 'undefined' ? tags : []; 
+            this.tags = ko.observableArray(tags);
+            
+            discount = typeof(discount) !== 'undefined' ? discount : 0; 
+            this.discount = ko.observable(discount); 
+            this.formattedDiscount = ko.computed(function() { 
+                return (this.discount() * 100) + "%"; }, this);
+
+            // this.formattedName = ko.computed(function() { 
+            //     return "<strong>" + this.name() + "</strong>"; }, this); 
+        }
+
+
+        function PersonViewModel () {
+            let self = this; 
+            this.firstName= ko.observable("John"); 
+            this.lastName= ko.observable("Smith");
+            this.checkout = function() { alert("Trying to check out!");
+            };
+            this.fullName = ko.computed(function() { 
+                return this.firstName() + " " + this.lastName(); 
+                }, this);
+
+            this.shoppingCart = ko.observableArray([ 
+                new Product("Beer", 10.99, null, .20), 
+                new Product("Brats", 7.99, null, .10), 
+                new Product("Buns", 1.49,),
+                new Product("Buns", 1.49, ['Baked goods', 'Hot dogs']), 
+            ]);
+
+            
+            this.addProduct = function() { 
+            this.shoppingCart.push(new Product("More Beer", 10.99));
+            };
+            
+            this.removeProduct = function(product) { 
+                self.shoppingCart.destroy(product); 
+                alert(self.shoppingCart().length);
+                alert(product._destroy); 
+                };
+
+            let featured = new Product("Acme BBQ Sauce", 3.99); 
+            this.featuredProduct = ko.observable(featured);
+
+
+            
+        };
+
+        
+         let vm = new PersonViewModel(); 
+         ko.applyBindings(vm); 
+         vm.firstName("Mary");
+         
+
+      
+    </script>
+</body>
+</html>
